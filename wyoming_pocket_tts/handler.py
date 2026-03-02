@@ -93,7 +93,12 @@ class PocketTTSEventHandler(AsyncEventHandler):
             # Generate audio
             try:
                 audio_tensor = self.model.generate_audio(voice_state, synthesize.text)
-                audio_bytes = (audio_tensor.numpy() * 32767).astype("int16").tobytes()
+                audio_bytes = (
+                    (audio_tensor * self.cli_args.volume_multiplier)
+                    .clamp(-1.0, 1.0)
+                    .numpy()
+                    * 32767
+                ).astype("int16").tobytes()
 
                 # Send audio via Wyoming protocol
                 sample_rate = self.model.sample_rate

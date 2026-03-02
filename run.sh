@@ -10,6 +10,7 @@ if command -v bashio &> /dev/null; then
     VOICE=$(bashio::config 'voice')
     VOICES_DIR=$(bashio::config 'voices_dir')
     PRELOAD_VOICES=$(bashio::config 'preload_voices')
+    VOLUME_MULTIPLIER=$(bashio::config 'volume_multiplier')
     DEBUG=$(bashio::config 'debug')
     HF_TOKEN=$(bashio::config 'hf_token')
 else
@@ -18,6 +19,7 @@ else
         VOICE=$(jq -r '.voice // "alba"' "$CONFIG_PATH")
         VOICES_DIR=$(jq -r '.voices_dir // "/share/tts-voices"' "$CONFIG_PATH")
         PRELOAD_VOICES=$(jq -r '.preload_voices // false' "$CONFIG_PATH")
+        VOLUME_MULTIPLIER=$(jq -r '.volume_multiplier // 2.0' "$CONFIG_PATH")
         DEBUG=$(jq -r '.debug // false' "$CONFIG_PATH")
         HF_TOKEN=$(jq -r '.hf_token // ""' "$CONFIG_PATH")
     else
@@ -25,6 +27,7 @@ else
         VOICE="${VOICE:-alba}"
         VOICES_DIR="${VOICES_DIR:-/share/tts-voices}"
         PRELOAD_VOICES="${PRELOAD_VOICES:-false}"
+        VOLUME_MULTIPLIER="${VOLUME_MULTIPLIER:-2.0}"
         DEBUG="${DEBUG:-false}"
         HF_TOKEN="${HF_TOKEN:-}"
     fi
@@ -45,6 +48,7 @@ ARGS=(
     --port "10200"
     --voice "$VOICE"
     --voices-dir "$VOICES_DIR"
+    --volume-multiplier "$VOLUME_MULTIPLIER"
 )
 
 if [ "$PRELOAD_VOICES" = "true" ]; then

@@ -51,6 +51,12 @@ async def main() -> None:
         help="Preload all preset voices at startup (slower startup, faster first request)",
     )
     parser.add_argument(
+        "--volume-multiplier",
+        type=float,
+        default=2.0,
+        help="Gain multiplier applied to audio output (default: 2.0). Values above 1.0 boost quiet output; audio is clipped to prevent distortion.",
+    )
+    parser.add_argument(
         "--debug",
         action="store_true",
         help="Enable debug logging",

@@ -42,6 +42,7 @@ options:
   voice: alba
   voices_dir: /share/tts-voices
   preload_voices: false
+  volume_multiplier: 2.0
   debug: false
   hf_token: ""
 
@@ -49,6 +50,7 @@ schema:
   voice: str
   voices_dir: str
   preload_voices: bool
+  volume_multiplier: float
   debug: bool
   hf_token: password
 
